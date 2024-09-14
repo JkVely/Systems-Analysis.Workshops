@@ -4,9 +4,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class BioInformatics {
-
     private double[] probabilities;
     private Map<String, Integer> patternCount;
+    private double entropyThreshold;
 
     /**
      * Constructor for generating random DNA sequences and detecting motifs.
@@ -17,15 +17,20 @@ public class BioInformatics {
      * @param probabilities probabilities of each base (A, C, G, T)
      * @param motifSize  size of the motif to detect
      * @param filename   output file name
+     * @param entropyThreshold   threshold for entropy calculation
      */
-    public BioInformatics(int loops, int minSize, int maxSize, double[] probabilities, int motifSize, String filename) {
+    public BioInformatics(int loops, int minSize, int maxSize, double[] probabilities, int motifSize, String filename, double  entropyThreshold) {
         this.patternCount = new HashMap<>();
         this.probabilities = probabilities;
-        filename = "./data/" + filename + ".txt";
+        this.entropyThreshold = entropyThreshold;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 0; i < loops; i++) {
-                int sequenceSize = (int) (Math.random() * (maxSize - minSize)) + minSize;
-                String sequence = generateSequence(sequenceSize);
+                String sequence;
+                do {
+                    int sequenceSize = (int) (Math.random() * (maxSize - minSize)) + minSize;
+                    sequence = generateSequence(sequenceSize);
+                } while (calculateEntropy(sequence) < this.entropyThreshold);
+
                 writer.write(sequence);
                 writer.newLine();
                 detectMotif(sequence, motifSize);
@@ -113,6 +118,33 @@ public class BioInformatics {
         );
     }
 
+    /**
+     * Calculates the Shannon entropy of a given DNA sequence.
+     * 
+     * Shannon entropy is a measure of the uncertainty or randomness in a probability distribution.
+     * In the context of DNA sequences, it can be used to quantify the complexity or variability of the sequence.
+     * 
+     * This method calculates the Shannon entropy of the given DNA sequence by first determining the frequency of each base (A, C, G, T),
+     * then using these frequencies to calculate the entropy.
+     * 
+     * @param sequence the DNA sequence for which to calculate the Shannon entropy
+     * @return the Shannon entropy of the given DNA sequence
+     */
+    private double calculateEntropy(String sequence) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for (char base : sequence.toCharArray()) {
+            freqMap.put(base, freqMap.getOrDefault(base, 0) + 1);
+        }
+
+        double entropy = 0.0;
+        int length = sequence.length();
+        for (int count : freqMap.values()) {
+            double probability = (double) count / length;
+            entropy -= probability * Math.log(probability) / Math.log(2);
+        }
+
+        return entropy;
+    }
 
     /**
      * Main entry point of the program.
@@ -166,9 +198,11 @@ public class BioInformatics {
             double[] probabilities = {probA, probC, probG, probT};
             System.out.println("Enter the size of the patterns to find: ");
             int patternSize = sc.nextInt();
+            System.out.println("Enter the entropy threshold value: ");
+            double entropyThreshold = sc.nextDouble();
             sc.close();
 
-            BioInformatics bio = new BioInformatics(loops, min, max, probabilities, patternSize, filename);
+            BioInformatics bio = new BioInformatics(loops, min, max, probabilities, patternSize, filename, entropyThreshold);
             bio.printPatternCount();
 
         } else {
