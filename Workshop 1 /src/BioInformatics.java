@@ -21,7 +21,7 @@ public class BioInformatics {
     public BioInformatics(int loops, int minSize, int maxSize, double[] probabilities, int motifSize, String filename) {
         this.patternCount = new HashMap<>();
         this.probabilities = probabilities;
-        filename = "./data/" + filename;
+        filename = "./data/" + filename + ".txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 0; i < loops; i++) {
                 int sequenceSize = (int) (Math.random() * (maxSize - minSize)) + minSize;
@@ -43,7 +43,7 @@ public class BioInformatics {
      */
     public BioInformatics(int motifSize,  String filename) {
         this.patternCount = new HashMap<>();
-        filename = "./data/" + filename;
+        filename = "./data/" + filename +  ".txt";
         readAndDetectMotifFromFile(filename, motifSize);
     }
 
@@ -125,20 +125,20 @@ public class BioInformatics {
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        boolean writeMode;
 
         while (true) {
             System.out.println("Do you want to generate new sequences or read from an existing file? (write (w)/read (r)):");
             String mode = sc.nextLine().trim().toLowerCase();
-
             if (mode.equals("w") || mode.equals("write") || mode.equals("r") || mode.equals("read")) {
-                boolean writeMode = mode.equals("w") || mode.equals("write");
+                writeMode = mode.equals("w") || mode.equals("write");
                 break;
             } else {
                 System.out.println("Invalid option. Please choose \"write (w)\" or \"read (r)\".");
             }
         }
 
-        System.out.println("Enter the filename:");
+        System.out.println("Enter the filename (withou the extention):");
         String filename = sc.nextLine();
 
         if (writeMode) {
