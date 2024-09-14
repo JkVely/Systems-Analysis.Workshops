@@ -20,6 +20,7 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     - Run the program in write mode to generate new sequences:
     ```bash
     Do you want to generate new sequences or read from an existing file? (write (w)/read (r)): w
+    Enter the filename (without extention): sequences
     Enter the number of sequences to generate: 100
     Enter the minimum length of these strings: 5
     Enter the maximum length: 100
@@ -31,6 +32,6 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     - Run the program in read mode to detect motifs from an existing file:
     ```bash
     Do you want to generate new sequences or read from an existing file? (write (w)/read (r)): r
-    Enter the filename: sequences.txt
+    Enter the filename (without extention): sequences
     Enter the size of the patterns to find: 6
     ```
