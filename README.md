@@ -17,7 +17,7 @@ Each workshop will have its own directory structured as follows:
   - **/data** (if applicable): Any datasets used or generated during the workshop.
 
 ## Workshop Topics
-1. **[Workshop 1](./Workshop-1/README.md)**: Entropy and Divide & Conquer
+1. **[Workshop 1](./Workshop%201%20/README.md)**: Entropy and Divide & Conquer
    - Generation of artificial genetic sequences.
    - Motif detection using probabilistic methods.
    - Divide & Conquer strategies for data processing.
