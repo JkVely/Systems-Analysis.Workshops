@@ -21,6 +21,7 @@ public class BioInformatics {
     public BioInformatics(int loops, int minSize, int maxSize, double[] probabilities, int motifSize, String filename) {
         this.patternCount = new HashMap<>();
         this.probabilities = probabilities;
+        filename = "./data/" + filename;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 0; i < loops; i++) {
                 int sequenceSize = (int) (Math.random() * (maxSize - minSize)) + minSize;
@@ -42,6 +43,7 @@ public class BioInformatics {
      */
     public BioInformatics(int motifSize,  String filename) {
         this.patternCount = new HashMap<>();
+        filename = "./data/" + filename;
         readAndDetectMotifFromFile(filename, motifSize);
     }
 
