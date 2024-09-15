@@ -4,6 +4,7 @@ This repository contains all the workshops completed during the **Systems Analys
 
 ## Course Information
 - **Course**: Systems Analysis
+- **Career**: Systems Engineering
 - **Instructor**: Eng. Carlos Andrés Sierra, M.Sc.
 - **Institution**: Universidad Distrital Francisco José de Caldas
 - **Semester**: 2024-III
