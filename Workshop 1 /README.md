@@ -24,12 +24,12 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     - Run the program in write mode to generate new sequences:
     ```bash
     Do you want to generate new sequences or read from an existing file? (write (w)/read (r)): w
-    Enter the filename (without extension): sequences
-    Enter the number of sequences to generate: 100
+    Enter the filename (without extension): dataExample
+    Enter the number of sequences to generate: 240240
     Enter the minimum length of these strings: 5
     Enter the maximum length: 100
-    Enter the probabilities for each DNA base (A, C, G, T), respectively: 0.25 0.25 0.25 0.25
-    Enter the size of the patterns to find: 6
+    Enter the probabilities for each DNA base (A, C, G, T), respectively: 0.25 0.50 0.75 1.00
+    Enter the size of the patterns to find: 4
     Enter the entropy threshold value: 1.25
     ```
 
@@ -37,7 +37,7 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     - Run the program in read mode to detect motifs from an existing file:
     ```bash
     Do you want to generate new sequences or read from an existing file? (write (w)/read (r)): r
-    Enter the filename (without extension): sequences
+    Enter the filename (without extension): dataExample
     Enter the size of the patterns to find: 6
     ```
 
