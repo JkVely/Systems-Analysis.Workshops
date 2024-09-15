@@ -7,6 +7,7 @@ public class BioInformatics {
     private double[] probabilities;
     private Map<String, Integer> patternCount;
     private double entropyThreshold;
+    private long duration;
 
     /**
      * Constructor for generating random DNA sequences and detecting motifs.
@@ -23,6 +24,9 @@ public class BioInformatics {
         this.patternCount = new HashMap<>();
         this.probabilities = probabilities;
         this.entropyThreshold = entropyThreshold;
+        this.duration = 0;
+        filename  = "./data/"+ filename + ".txt";
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 0; i < loops; i++) {
                 String sequence;
@@ -48,6 +52,7 @@ public class BioInformatics {
      */
     public BioInformatics(int motifSize,  String filename) {
         this.patternCount = new HashMap<>();
+        this.duration = 0;
         filename = "./data/" + filename +  ".txt";
         readAndDetectMotifFromFile(filename, motifSize);
     }
@@ -82,10 +87,14 @@ public class BioInformatics {
      * @param motifSize size of the motif
      */
     private void detectMotif(String sequence, int motifSize) {
+        long  startTime = System.currentTimeMillis();
         for (int i = 0; i <= sequence.length() - motifSize; i++) {
             String pattern = sequence.substring(i, i + motifSize);
             patternCount.put(pattern, patternCount.getOrDefault(pattern, 0) + 1);
         }
+        long  endTime = System.currentTimeMillis();
+        long sequenceDuration = endTime - startTime;
+        this.duration += sequenceDuration;
     }
 
     /**
@@ -106,16 +115,27 @@ public class BioInformatics {
     }
 
     /**
-     * Prints the count of each pattern found in the DNA sequences.
+     * Prints the motif(s) with the highest number of occurrences.
      * 
-     * This method iterates over the patternCount map and prints each pattern along with its occurrence count.
+     * This method finds the maximum number of occurrences in the patternCount map
+     * and prints each motif with that number of occurrences.
      * 
      * @see #patternCount
      */
     public void printPatternCount() {
-        patternCount.forEach((key, value) ->
-                System.out.println("Pattern: " + key + " - Occurrences: " + value)
-        );
+        // Encuentra el número máximo de ocurrencias
+        int maxOccurrences = patternCount.values().stream()
+                                        .max(Integer::compareTo)
+                                        .orElse(0);
+                                        
+        System.out.println("Motif(s) with the highest number of occurrences (" + maxOccurrences + "):");
+        patternCount.forEach((key, value) -> {
+            if (value == maxOccurrences) {
+                System.out.println("Pattern: " + key + " - Occurrences: " + value);
+            }
+        });
+
+        System.out.println("It took " + this.duration + " milliseconds to find the motifs");
     }
 
     /**
@@ -170,7 +190,7 @@ public class BioInformatics {
             }
         }
 
-        System.out.println("Enter the filename (withou the extention):");
+        System.out.println("Enter the filename (without the extention):");
         String filename = sc.nextLine();
 
         if (writeMode) {
