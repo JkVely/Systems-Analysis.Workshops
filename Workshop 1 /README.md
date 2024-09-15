@@ -41,6 +41,13 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     Enter the size of the patterns to find: 6
     ```
 
+3. **Output**:
+   ```bash
+   Motif(s) with the highest number of occurrences (11311):
+   Pattern: AGGG - Occurrences: 11311
+   It took 873 milliseconds to find the motifs
+   ```
+
 ## Notes
 - Ensure that the base probabilities are provided in the correct order (A, C, G, T) for meaningful results.
 - The entropy threshold allows you to filter sequences based on their repetitiveness, with 0 being very repetitive and 2 being more varied.
