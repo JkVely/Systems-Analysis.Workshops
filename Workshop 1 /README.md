@@ -14,7 +14,7 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
   - C: Value between 0.3 and 0.6
   - G: Value between 0.6 and 0.8
   - T: Value between 0.8 and 1
-  *Note:* The provided values are suggested thresholds to achieve results that are more reflective of real-life scenarios.
+  **Note:* The provided values are suggested thresholds to achieve results that are more reflective of real-life scenarios.
 - **Motif Detection**: Detect patterns (motifs) of a specified size within the DNA sequences.
 - **File Operations**: Supports reading and writing sequences to files. Users can choose between generating new sequences or reading from an existing file for motif detection.
 - **Entropy Filtering**: Uses entropy measures to filter out sequences with high repetition. The entropy threshold must be between 0 and 2, where 2 represents high entropy and 0 represents low entropy.
