@@ -54,3 +54,4 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
 ## Notes
 - Ensure that the base probabilities are provided in the correct order (A, C, G, T) for meaningful results.
 - The entropy threshold allows you to filter sequences based on their repetitiveness, with 0 being very repetitive and 2 being more varied.
+- For more information see the **[report](./docs/Report.pdf)**
