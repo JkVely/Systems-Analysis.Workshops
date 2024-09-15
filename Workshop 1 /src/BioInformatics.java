@@ -1,7 +1,9 @@
 import java.io.*;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class BioInformatics {
     private double[] probabilities;
@@ -118,24 +120,54 @@ public class BioInformatics {
      * Prints the motif(s) with the highest number of occurrences.
      * 
      * This method finds the maximum number of occurrences in the patternCount map
-     * and prints each motif with that number of occurrences.
+     * and prints each motif with that number of occurrences. If there are multiple motifs
+     * with the maximum number of occurrences, it selects the one with the highest number of
+     * consecutive repeated bases.
      * 
      * @see #patternCount
      */
     public void printPatternCount() {
-        // Encuentra el número máximo de ocurrencias
         int maxOccurrences = patternCount.values().stream()
                                         .max(Integer::compareTo)
                                         .orElse(0);
-                                        
+        
+        Map<String, Integer> maxMotifs = patternCount.entrySet().stream()
+                .filter(entry -> entry.getValue() == maxOccurrences)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        
+        String bestMotif = maxMotifs.keySet().stream()
+                .max(Comparator.comparingInt(this::countConsecutiveRepeatedBases))
+                .orElse("");
+
         System.out.println("Motif(s) with the highest number of occurrences (" + maxOccurrences + "):");
-        patternCount.forEach((key, value) -> {
-            if (value == maxOccurrences) {
-                System.out.println("Pattern: " + key + " - Occurrences: " + value);
-            }
-        });
+        if (!bestMotif.isEmpty()) {
+            System.out.println("Pattern: " + bestMotif + " - Occurrences: " + maxMotifs.get(bestMotif));
+        }
 
         System.out.println("It took " + this.duration + " milliseconds to find the motifs");
+    }
+
+    /**
+     * Counts the number of consecutive repeated bases in a given motif.
+     * 
+     * @param motif The motif for which to count consecutive repeated bases.
+     * @return The count of the highest number of consecutive repeated bases.
+     */
+    private int countConsecutiveRepeatedBases(String motif) {
+        int maxCount = 0;
+        int currentCount = 1;
+
+        for (int i = 1; i < motif.length(); i++) {
+            if (motif.charAt(i) == motif.charAt(i - 1)) {
+                currentCount++;
+            } else {
+                maxCount = Math.max(maxCount, currentCount);
+                currentCount = 1;
+            }
+        }
+        maxCount = Math.max(maxCount, currentCount);
+
+        return maxCount;
     }
 
     /**
