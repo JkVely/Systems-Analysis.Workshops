@@ -42,6 +42,7 @@ This project is part of the **Systems Analysis** course, aimed at developing ski
     ```
 
 3. **Output**:
+   - It'll return de motifs with the highest number of occurrences in whole dataset and the time it took to determine it:
    ```bash
    Motif(s) with the highest number of occurrences (11311):
    Pattern: AGGG - Occurrences: 11311
